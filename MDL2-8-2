@@ -1,0 +1,32 @@
+create database MDL2_8_2;
+
+use MDL2_8_2;
+
+-- Tạo bảng products lưu thông tin sản phẩm
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    price DECIMAL(10, 2),
+    category VARCHAR(50)
+);
+
+-- Thêm dữ liệu mẫu vào bảng products để kiểm tra
+INSERT INTO products (product_id, product_name, price, category) VALUES
+(1, 'Laptop Dell Inspiron', 15000000, 'Electronics'),
+(2, 'iPhone 15 Pro', 25000000, 'Electronics'),
+(3, 'Áo sơ mi nam', 350000, 'Fashion'),
+(4, 'Giày thể thao Nike', 2000000, 'Fashion');
+
+-- Tạo Stored Procedure có 1 tham số IN: sp_get_products_by_category
+DELIMITER //
+
+CREATE PROCEDURE sp_get_products_by_category(IN p_category VARCHAR(50))
+BEGIN
+    SELECT * FROM products 
+    WHERE category = p_category;
+END //
+
+DELIMITER ;
+
+-- Bước 3: Viết câu lệnh CALL để gọi procedure với giá trị cụ thể
+CALL sp_get_products_by_category('Electronics');
